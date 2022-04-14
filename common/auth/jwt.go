@@ -24,7 +24,9 @@ var (
 	effectTime = 6 * time.Hour
 )
 
+func Test(s interface{})  {
 
+}
 // 生成token
 func GenerateToken(claims *UserClaims) string {
 	//设置token有效期，也可不设置有效期，采用redis的方式

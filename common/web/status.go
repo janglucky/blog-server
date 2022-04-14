@@ -20,6 +20,7 @@ const (
 	STATUS_NOT_LOGIN        Status = 2
 	STATUS_ERROR			Status = 3
 	STATUS_NO_CONTENT       Status = 204
+	STATUS_VERIFY_ERROR     Status = 401
 	STATUS_INTERNAL_ERROR   Status = 500
 	STATUS_FUNCTION_TIMEOUT Status = 504
 )

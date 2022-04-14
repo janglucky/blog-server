@@ -13,9 +13,9 @@ type User struct {
 	Utime    time.Time `json:"utime"`
 }
 
-func (this *User) Validate(username string, password string) bool {
-	err := MysqlModel.DB.Table("dumi_xiaoduapp_gateway_env_user").Where("username = ? and password = ?", username, password).Find(this).Error
-	return err == nil
+func (this *User) Validate() error {
+	err := MysqlModel.DB.Table("tensir_blog_user").Where("username = ? and password = ?", this.Username, this.Password).Find(this).Error
+	return err
 }
 
 func (this *User) GetUserById(userId string) bool {
