@@ -1,0 +1,22 @@
+Name = "dcs_api"
+# 连接超时
+ConnTimeOut = 200 # supported
+# 写数据超时
+WriteTimeOut = 500
+# 读数据超时
+ReadTimeOut = 500
+# 请求失败后的重试次数：总请求次数 = Retry + 1
+Retry = 1
+# 数据头协议
+Protocol = "http" # http / nshead
+# 数据体格式
+Converter = "json"
+
+# 资源使用策略
+Strategy = "random" # random /roundrobin
+
+# 资源定位：手动配置 - 使用IP、端口
+[Resources]
+Host = "127.0.0.1"
+Ip = "127.0.0.1"
+Port = 8081
