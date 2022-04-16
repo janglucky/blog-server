@@ -32,6 +32,7 @@ var StatusName = map[Status]string {
 	STATUS_NOT_LOGIN:        "user.not login",
 	STATUS_NO_CONTENT:       "no.content",
 	STATUS_ERROR:            "error",
+	STATUS_VERIFY_ERROR:     "verify.error",
 	STATUS_INTERNAL_ERROR:   "internal.error",
 	STATUS_FUNCTION_TIMEOUT: "internal.function.timeout",
 }

@@ -34,6 +34,8 @@ func StartHttpServer(port string) {
 	// 博客后台
 	app.PartyFunc("/admin", func(party iris.Party) {
 		party.Use(middleware.CheckToken)
+		party.Post("/userInfo", user.UserInfo)
+
 	})
 
 	l, err := net.Listen("tcp4", ":"+port)
