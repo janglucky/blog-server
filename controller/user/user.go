@@ -2,6 +2,7 @@ package user
 
 import (
 	"github.com/janglucky/blog-server/common/auth"
+	"github.com/janglucky/blog-server/common/model"
 	"github.com/janglucky/blog-server/common/web"
 	"github.com/kataras/iris/v12"
 )
@@ -49,7 +50,9 @@ func UserInfo(ctx iris.Context)  {
 		return
 	}
 
-	web.RenderResponse(ctx, web.STATUS_OK, userClaims)
+	var user model.User
+	user.GetUserById(userClaims.Id)
+	web.RenderResponse(ctx, web.STATUS_OK, user)
 }
 
 func Logout(ctx iris.Context)  {
