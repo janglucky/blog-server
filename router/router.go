@@ -22,9 +22,11 @@ func StartHttpServer(port string) {
 		})
 	}
 
+	app.Use(middleware.CheckRequest)
+
 	// 博客前台
 	app.PartyFunc("/blog", func(party iris.Party) {
-		party.Get("/getAllArticles", blog.GetAllArticles)
+		party.Post("/getAllArticles", blog.GetAllArticles)
 	})
 	
 	app.PartyFunc("/user", func(party router.Party) {
@@ -35,6 +37,7 @@ func StartHttpServer(port string) {
 	app.PartyFunc("/admin", func(party iris.Party) {
 		party.Use(middleware.CheckToken)
 		party.Post("/userInfo", user.UserInfo)
+		party.Post("/logout", user.Logout)
 
 	})
 

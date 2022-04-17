@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"errors"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -39,19 +40,19 @@ func GenerateToken(claims *UserClaims) (string, error) {
 }
 
 // 解析Token
-func ParseToken(tokenString string) *UserClaims {
+func ParseToken(tokenString string) (*UserClaims, error) {
 	//解析token
 	token, err := jwt.ParseWithClaims(tokenString, &UserClaims{}, func(token *jwt.Token) (interface{}, error) {
 		return secret, nil
 	})
 	if err != nil {
-		return nil
+		return nil, err
 	}
 	claims, ok := token.Claims.(*UserClaims)
 	if !ok {
-		return nil
+		return nil, errors.New("params_invalid")
 	}
-	return claims
+	return claims, nil
 }
 
 // 更新token
@@ -72,4 +73,11 @@ func Refresh(tokenString string) (string, error) {
 	jwt.TimeFunc = time.Now
 	claims.StandardClaims.ExpiresAt = time.Now().Add(2 * time.Hour).Unix()
 	return GenerateToken(claims)
+}
+
+func Reset(claims *UserClaims)  {
+
+	// todo
+	// token过期实现，这种方式无法让token过期
+	claims.StandardClaims.ExpiresAt = time.Now().Add(0).Unix()
 }

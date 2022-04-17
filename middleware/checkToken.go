@@ -1,31 +1,30 @@
 package middleware
 
 import (
-	"encoding/json"
-	"github.com/janglucky/blog-server/common/web"
+	"github.com/janglucky/blog-server/common/auth"
 	_ "github.com/janglucky/blog-server/common/auth"
+	"github.com/janglucky/blog-server/common/web"
 	"github.com/kataras/iris/v12"
-	"io/ioutil"
 )
 
 func CheckToken(ctx iris.Context)  {
 
-	var reqParams web.Request
-	// 1.读取raw请求
-	rawBody, err := ioutil.ReadAll(ctx.Request().Body)
-	if err != nil {
-		web.RenderResponse(ctx,web.STATUS_ERROR)
+
+	req := ctx.Values().Get("reqParams")
+	reqParams, ok := req.(web.Request)
+
+	if !ok {
+		web.RenderResponse(ctx, web.STATUS_NOT_LOGIN)
 		return
 	}
 
-	// 2.进行json解码
-	err = json.Unmarshal(rawBody, &reqParams)
+	token := reqParams.Token
+	userClaims, err := auth.ParseToken(token)
 	if err != nil {
-		web.RenderResponse(ctx, web.STATUS_ERROR)
+		web.RenderResponse(ctx, web.STATUS_INTERNAL_ERROR, err)
 		return
 	}
 
-	// 3.保存参数
-	ctx.Values().Set("reqParams", reqParams)
+	ctx.Values().Set("userClaims", userClaims)
 	ctx.Next()
 }
