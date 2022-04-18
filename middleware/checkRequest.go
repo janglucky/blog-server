@@ -24,7 +24,6 @@ func CheckRequest(ctx iris.Context)  {
 		web.RenderResponse(ctx, web.STATUS_ERROR)
 		return
 	}
-
 	// 3.保存参数
 	ctx.Values().Set("reqParams", reqParams)
 	ctx.Next()

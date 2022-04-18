@@ -12,7 +12,7 @@ type User struct {
 	Ctime    time.Time `json:"ctime"`
 	Utime    time.Time `json:"utime"`
 	Avatar   string    `json:"avatar"`
-	email    string    `json:"email"`
+	Email    string    `json:"email"`
 }
 
 func (this *User) Validate() error {

@@ -6,6 +6,7 @@ import (
 )
 
 func GetAllArticles(ctx iris.Context)  {
+
 	web.RenderResponse(ctx, web.STATUS_OK)
 	return
 }

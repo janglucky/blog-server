@@ -1,6 +1,7 @@
 package router
 
 import (
+	"github.com/janglucky/blog-server/controller/article"
 	"github.com/janglucky/blog-server/controller/blog"
 	"github.com/janglucky/blog-server/controller/user"
 	"github.com/janglucky/blog-server/middleware"
@@ -33,13 +34,21 @@ func StartHttpServer(port string) {
 		party.Post("/verify", user.Verify)
 	})
 
-	// 博客后台
+	// 管理员相关
 	app.PartyFunc("/admin", func(party iris.Party) {
 		party.Use(middleware.CheckToken)
 		party.Post("/userInfo", user.UserInfo)
 		party.Post("/logout", user.Logout)
 
 	})
+
+	// 后台文章相关接口
+	app.PartyFunc("/article", func(party iris.Party) {
+		party.Use(middleware.CheckToken)
+		party.Post("/upload", article.UploadArticle)
+		party.Post("/list", article.ListArticle)
+	})
+
 
 	l, err := net.Listen("tcp4", ":"+port)
 	if err != nil {

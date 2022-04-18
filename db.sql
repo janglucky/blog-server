@@ -3,14 +3,15 @@ create database  if not exists tensir_blog;
 use tensir_blog;
 
 CREATE TABLE if not exists `tensir_blog_user`(
-    `id` int(11) NOT NULL AUTO_INCREMENT,
-    `username` varchar(60) NOT NULL,
-    `password` varchar(60) NOT NULL,
-    `role` varchar(50) DEFAULT NULL,
-    `ctime` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    `utime` datetime DEFAULT NULL,
-    `avatar` varchar(200) DEFAULT NULL,
-    `email` varchar(100) DEFAULT NULL,
+    `id` int(11) NOT NULL AUTO_INCREMENT comment '自增主键',
+    `username` varchar(60) NOT NULL comment '用户名',
+    `password` varchar(60) NOT NULL comment '密码',
+    `role` varchar(50) DEFAULT NULL comment '角色',
+    `ctime` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '创建时间',
+    `utime` datetime DEFAULT NULL comment '更新时间',
+    `avatar` varchar(200) DEFAULT NULL comment '头像',
+    `email` varchar(100) DEFAULT NULL comment '邮箱',
+    `class_id` int(11) default null  comment '类别id',
     PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1;
 
@@ -38,4 +39,11 @@ create table if not exists `tensir_blog_article_tag` (
     `article_id` int(11) not null comment '文章id主键',
     `tag_id` int(11) not null comment '标签id主键',
     primary key (`article_id`, `tag_id`)
+) ENGINE =MyISAM;
+
+create table if not exists  `tensir_blog_class` (
+    `id` int(11) not null auto_increment comment '自增主键',
+    `name` varchar(60) not null  comment '类别名称',
+    `description` tinytext default null comment '类别描述',
+    primary key (`id`)
 ) ENGINE =MyISAM;
