@@ -47,6 +47,7 @@ func StartHttpServer(port string) {
 		party.Use(middleware.CheckToken)
 		party.Post("/upload", article.UploadArticle)
 		party.Post("/list", article.ListArticle)
+		party.Post("/searchTagByKeyword", article.SearchTagByKeyword)
 	})
 
 

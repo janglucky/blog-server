@@ -8,20 +8,18 @@ import (
 )
 
 func CheckToken(ctx iris.Context)  {
-
-
 	req := ctx.Values().Get("reqParams")
 	reqParams, ok := req.(web.Request)
 
 	if !ok {
-		web.RenderResponse(ctx, web.STATUS_NOT_LOGIN)
+		web.RenderResponse(ctx, web.STATUS_PARAMS_INVALID)
 		return
 	}
 
 	token := reqParams.Token
 	userClaims, err := auth.ParseToken(token)
 	if err != nil {
-		web.RenderResponse(ctx, web.STATUS_INTERNAL_ERROR, err)
+		web.RenderResponse(ctx, web.STATUS_NOT_LOGIN, err)
 		return
 	}
 

@@ -5,8 +5,8 @@ import (
 	"strings"
 	"sync"
 
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
- 	_ "github.com/go-sql-driver/mysql"
 )
 
 type MySql struct {
