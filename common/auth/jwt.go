@@ -9,7 +9,7 @@ import (
 
 //用户信息类，作为生成token的参数
 type UserClaims struct {
-	Id    string `json:"id"`
+	Id    int `json:"id"`
 	Username  string `json:"username"`
 	Password string `json:"password"`
 	Role string `json:"role"`

@@ -5,7 +5,7 @@ import (
 )
 
 type User struct {
-	Id       string    `json:"id"`
+	Id       int       `json:"id"`
 	Username string    `json:"username"`
 	Password string    `json:"password"`
 	Role     string    `json:"role"`
@@ -20,7 +20,7 @@ func (this *User) Validate() error {
 	return err
 }
 
-func (this *User) GetUserById(userId string) bool {
+func (this *User) GetUserById(userId int) bool {
 	err := MysqlModel.DB.Table("tensir_blog_user").Where("id = ?", userId).Find(this).Error
 	return err == nil
 }

@@ -8,14 +8,12 @@ import (
 )
 
 func UploadArticle(ctx iris.Context)  {
-
 	uc := ctx.Values().Get("userClaims")
 	userClaims, ok := uc.(*auth.UserClaims)
 	if !ok {
 		web.RenderResponse(ctx, web.STATUS_INTERNAL_ERROR)
 		return
 	}
-
 	req := ctx.Values().Get("reqParams")
 	reqParams, ok := req.(web.Request)
 	if !ok {
@@ -23,12 +21,13 @@ func UploadArticle(ctx iris.Context)  {
 		return
 	}
 	article := reqParams.Article
+	tags := reqParams.Tags
+	fmt.Println(tags)
 	article.SetAuthorId(userClaims.Id)
 	article.SetCtime()
 
 	err := article.Create()
 	if err != nil {
-		fmt.Println(err.Error())
 		web.RenderResponse(ctx, web.STATUS_INTERNAL_ERROR)
 		return
 	}

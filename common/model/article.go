@@ -8,29 +8,18 @@ import (
 )
 
 type Article struct {
-	Id       string     `json:"id"`
+	Id       int     `json:"id"`
 	Title    string     `json:"title"`
 	Content  string     `json:"content"`
 	Ctime    *time.Time `json:"ctime"`
 	Utime    *time.Time `json:"utime"`
 	Status   int        `json:"status"`
-	AuthorId string     `json:"author_id"`
+	AuthorId int     `json:"author_id"`
 }
 
-type Tag struct {
-	Id          string    `json:"id"`
-	Name        string    `json:"name"`
-	Description string    `json:"description"`
-	Ctime       *time.Time `json:"ctime"`
-	Utime       *time.Time `json:"utime"`
-}
 
-type ArticleTagRel struct {
-	ArticleId string `json:"article_id"`
-	TagId     string `json:"tag_id"`
-}
 
-func (this *Article) SetAuthorId(authorId string)  {
+func (this *Article) SetAuthorId(authorId int)  {
 	if this != nil {
 		this.AuthorId = authorId
 	}
@@ -63,18 +52,9 @@ func (this *Article) String() string {
 	return out.String()
 }
 
-func (this *Tag) Create() error {
-	err := MysqlModel.DB.Table("tensir_blog_tag").Create(this).Error
-	return err
-}
 
-// SearchByKeyword ...按关键字搜索标签
-func (this *Tag) SearchByKeyword(keyword string) ([]Tag, error) {
-	// todo 使用索引
-	var tags []Tag
-	err := MysqlModel.DB.Table("tensir_blog_tag").Where("name like ?", keyword+"%").Find(&tags).Error
-	return tags,err
-}
+
+
 
 func (this *ArticleTagRel) Create() error {
 	err := MysqlModel.DB.Table("tensir_blog_article_tag").Create(this).Error
@@ -95,4 +75,33 @@ func (this *Article) GetAllUser() ([]User, bool) {
 	var userList []User
 	err := MysqlModel.DB.Table("tensir_blog_user").Find(&userList).Error
 	return userList, err == nil
+}
+
+
+type Tag struct {
+	Id          int    `json:"id"`
+	Name        string    `json:"name"`
+	Description string    `json:"description"`
+	Ctime       *time.Time `json:"ctime"`
+	Utime       *time.Time `json:"utime"`
+}
+
+type ArticleTagRel struct {
+	ArticleId int `json:"article_id"`
+	TagId     int `json:"tag_id"`
+}
+
+// SearchByKeyword ...按关键字搜索标签
+func (this *Tag) SearchByKeyword(keyword string) ([]Tag, error) {
+	// todo 使用索引
+	var tags []Tag
+	err := MysqlModel.DB.Table("tensir_blog_tag").Where("name like ?", keyword+"%").Find(&tags).Error
+	return tags,err
+}
+
+// Create ...创建一个标签
+
+func (this *Tag) Create() error {
+	err := MysqlModel.DB.Table("tensir_blog_tag").Create(this).Error
+	return err
 }
