@@ -28,7 +28,8 @@ func UploadArticle(ctx iris.Context)  {
 	article.SetCtime()
 
 	for i := range tags {
-		if tags[i].Id == 0 {
+		if tags[i].Id <= 0 {
+			tags[i].Id = 0
 			if err := tags[i].Create(); err != nil {
 				// todo 错误日志入库
 				fmt.Println(err.Error())

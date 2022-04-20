@@ -86,6 +86,16 @@ func (this *Tag) SearchByKeyword(keyword string) ([]Tag, error) {
 	return tags,err
 }
 
+func (this*Tag) SetCtime()  {
+	if this == nil {
+		return
+	}
+	if this.Ctime == nil {
+		this.Ctime = new(time.Time)
+	}
+	*this.Ctime = time.Now()
+}
+
 // Create ...创建一个标签
 func (this *Tag) Create() error {
 	err := MysqlModel.DB.Table("tensir_blog_tag").Create(this).Error
